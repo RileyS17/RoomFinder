@@ -20,7 +20,7 @@ const RoomItem = props => {
 
     //Get all schedule info for specific room
     const getRoomInfo = () => {
-        return fetch("http://192.168.1.58:5000/rooms/?room=" + props.room)
+        return fetch("http://" + props.thisServerIp + "/rooms/?room=" + props.room)
         .then((response) => response.json())
         .then((responseJson) => {
             const result = Object.keys(responseJson).map(key => ({[key]: responseJson[key]}));

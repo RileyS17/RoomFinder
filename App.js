@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import ShowRoomScreen from './components/ShowRoomScreen';
+import EnterServerScreen from './components/EnterServerScreen';
 
 export default function App() {
     //Find Available Room states
@@ -10,6 +11,9 @@ export default function App() {
     //View Room List states
     const [isViewRoomScreen, setViewRoomScreen] = useState(false);
     const [allRoomsData, setAllRoomsData] = useState([]);
+    //Set IP states
+    const [isIPScreen, setIPScreen] = useState(false);
+    const [serverIP, setServerIP] = useState("192.168.1.58:5000");
 
     //Button handlers
     const findAvailRoomsHandler = () => {
@@ -26,7 +30,17 @@ export default function App() {
     const closeViewRoomsScreen = () => {
         setViewRoomScreen(false);
     }
-
+    const setIPHandler = () => {
+        setIPScreen(true);
+    }
+    const closeSetIP = () => {
+        setIPScreen(false);
+    }
+    //Handler for set server IP
+    const confirmIpHandler = enteredIp => {
+        setServerIP(enteredIp);
+        console.log(serverIP);
+    }
 
     //Get list of rooms currently available + current time period
     const getAvailRoomData = async () => {
@@ -47,10 +61,9 @@ export default function App() {
         }
         var curTime = "" + new Date().getHours() + timeMin;
 
-        dayOfWeek = "Monday";
-        curTime = "1351";
         try {
-            let response = await fetch("http://192.168.1.58:5000/rooms/?day=" + dayOfWeek + "&cur_time=" + curTime);
+            console.log("http://" + serverIP + "/rooms/?day=" + dayOfWeek + "&cur_time=" + curTime);
+            let response = await fetch("http://" + serverIP + "/rooms/?day=" + dayOfWeek + "&cur_time=" + curTime);
             let responseJson = await response.json();
             const result = Object.keys(responseJson).map(key => ({[key]: responseJson[key]}));
             //Formats result so FlatList can use
@@ -70,7 +83,7 @@ export default function App() {
     //Get list of all rooms with building groups
     const getViewRoomData = async () => {
         try {
-            let response = await fetch('http://192.168.1.58:5000/buildings/rooms');
+            let response = await fetch('http://' + serverIP + '/buildings/rooms');
             let responseJson = await response.json();
             const result = Object.keys(responseJson).map(key => ({[key]: responseJson[key]}));
             //Formats result so SectionList can use
@@ -90,7 +103,11 @@ export default function App() {
     //Render function
     return (
         <View style={styles.container}>
-            <View>
+            <View style={styles.setIpStyle}>
+                <Button title="Set IP" color="black" onPress={setIPHandler}/>
+            </View>
+            <View style={styles.filler}></View>
+            <View style={styles.textView}>
                 <Text style={styles.titleText}>RoomFinder</Text>
             </View>
             <View style={styles.button}>
@@ -99,28 +116,51 @@ export default function App() {
             <View style={styles.button}>
                 <Button title="View Room List" color="black" onPress={viewRoomsHandler}/>
             </View>
-            <ShowRoomScreen visible={isAvailRoomScreen} onBackButton={closeAvailRoomScreen} dataAvail={availRoomData}/>
-            <ShowRoomScreen visible={isViewRoomScreen} onBackButton={closeViewRoomsScreen} dataAll={allRoomsData}/>
+            <View style={styles.filler}></View>
+            <ShowRoomScreen visible={isAvailRoomScreen} onBackButton={closeAvailRoomScreen} dataAvail={availRoomData} thisServerIp={serverIP}/>
+            <ShowRoomScreen visible={isViewRoomScreen} onBackButton={closeViewRoomsScreen} dataAll={allRoomsData} thisServerIp={serverIP}/>
+            <EnterServerScreen visible={isIPScreen} onBackButton={closeSetIP} currentIp={serverIP} onConfirmIp={confirmIpHandler}/>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flex: 1,
+        alignItems: 'stretch',
     },
     button: {
+        justifyContent: 'space-evenly',
+        flex: 2,
         width: "90%",
         margin: 20,
         backgroundColor: "#1eaae6",
         borderRadius: 50,
     },
+    textView: {
+        flex: 5,
+        justifyContent: 'center',
+    },
     titleText: {
         fontWeight: '900',
-        fontSize: 40,
+        fontSize: 50,
         marginBottom: 50,
+        alignSelf: 'center',
+    },
+    setIpStyle: {
+        justifyContent: 'space-evenly',
+        flex: 1,
+        marginRight: 20,
+        marginTop: 50,
+        width: "30%",
+        padding: 5,
+        alignItems: "center",
+        alignSelf: 'flex-end',
+        borderRadius: 10,
+        backgroundColor: "#1eaae6",
+    },
+    filler: {
+        flex: 6,
     },
 });

@@ -3,70 +3,12 @@ import { View, StyleSheet, Modal, Button, FlatList, SafeAreaView, Text, SectionL
 
 import RoomItem from './RoomItem';
 
-const tempData = [
-    {
-        room: 'UA2240',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'UA3130',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'ERC1054',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'ERC1056',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'ERC1092',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'ERC1094',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'ERC1096',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'some room 8',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'some room 9',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'some room 10',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-    {
-        room: 'some room 11',
-        scheduleStart: 'some time',
-        scheduleEnd: 'some time',
-    },
-];
-
 const ShowRoomScreen = props => {
     //Handles type/format of data displayed
     const checkProvidedData = () => {
         if (typeof props.dataAll !== 'undefined') {
             return <SectionList sections={props.dataAll}
-                                renderItem={({ item }) => ( <RoomItem room={item}/> )}
+                                renderItem={({ item }) => ( <RoomItem room={item} thisServerIp={props.thisServerIp}/> )}
                                 renderSectionHeader={({ section: { title } }) => (<View><Text style={styles.sectionHeader}>{title}</Text></View>)}
                                 keyExtractor={(item, index) => item + index}
                     />
@@ -75,7 +17,7 @@ const ShowRoomScreen = props => {
             if (props.dataAvail.length > 0) {
                 return <FlatList    data={props.dataAvail} 
                                     renderItem={({ item }) =>  
-                                                    <RoomItem room={item.room} scheduleStart={item.scheduleStart} scheduleEnd={item.scheduleEnd}/>
+                                                    <RoomItem room={item.room} scheduleStart={item.scheduleStart} scheduleEnd={item.scheduleEnd} thisServerIp={props.thisServerIp}/>
                                                 } 
                                     keyExtractor={item => item.room}
                         />
