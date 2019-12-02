@@ -1,5 +1,5 @@
 import React, { useState} from 'react';
-import { View, StyleSheet, Modal, Button, TextInput } from 'react-native';
+import { View, StyleSheet, Modal, Button, TextInput, Platform } from 'react-native';
 
 const EnterServerScreen = props => {
 
@@ -20,7 +20,7 @@ const EnterServerScreen = props => {
     return (
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.buttonStyle}>
-                <Button title="Back" color="black" onPress={backButtonHandler} />
+                <Button title="Back" color={Platform.OS === 'ios' ? "black" : ""} onPress={backButtonHandler} />
             </View>
             <View style={styles.mainView}>
                 <View style={styles.inputView}>
@@ -33,7 +33,7 @@ const EnterServerScreen = props => {
                     />
                 </View>
                 <View style={styles.confirmButton}>
-                    <Button title="Confirm" color="black" onPress={confirmButtonHandler}/>
+                    <Button title="Confirm" color={Platform.OS === 'ios' ? "black" : ""} onPress={confirmButtonHandler}/>
                 </View>
             </View>
         </Modal>

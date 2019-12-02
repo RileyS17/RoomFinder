@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Modal, Button, FlatList, SafeAreaView, Text, SectionList } from 'react-native';
+import { View, StyleSheet, Modal, Button, FlatList, SafeAreaView, Text, SectionList, Platform } from 'react-native';
 
 import RoomItem from './RoomItem';
 
@@ -36,7 +36,7 @@ const ShowRoomScreen = props => {
     return (
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.buttonStyle}>
-                <Button title="Back" color="black" onPress={props.onBackButton} />
+                <Button title="Back" color={Platform.OS === 'ios' ? "black" : ""} onPress={props.onBackButton} />
             </View>
             <SafeAreaView style={styles.listStyle}>
                 {checkProvidedData()}

@@ -55,7 +55,7 @@ const ViewRoomInfo = props => {
         <Modal visible={props.visible} animationType="slide">
             <View style={styles.container}>
                 <View style={styles.buttonStyle}>
-                    <Button title="Close" color="black" onPress={props.onCloseButton} />
+                    <Button title="Close" color={Platform.OS === 'ios' ? "black" : ""} onPress={props.onCloseButton} />
                 </View>
                 <View style={styles.titleStyle}>
                     <Text style={styles.titleText}>{props.title}</Text>

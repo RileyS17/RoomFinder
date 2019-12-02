@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert, Platform } from 'react-native';
 
 import ShowRoomScreen from './components/ShowRoomScreen';
 import EnterServerScreen from './components/EnterServerScreen';
@@ -80,7 +80,7 @@ export default function App() {
             console.log(error);
         }
     }
-    
+
     //Get list of all rooms with building groups
     const getViewRoomData = async () => {
         try {
@@ -107,17 +107,21 @@ export default function App() {
     return (
         <View style={styles.container}>
             <View style={styles.setIpStyle}>
-                <Button title="Set IP" color="black" onPress={setIPHandler}/>
+                <Button title="Set IP" color={Platform.OS === 'ios' ? "black" : ""} onPress={setIPHandler}/>
             </View>
             <View style={styles.filler}></View>
             <View style={styles.textView}>
                 <Text style={styles.titleText}>RoomFinder</Text>
             </View>
             <View style={styles.button}>
-                <Button title="Find Available Rooms" color="black" onPress={findAvailRoomsHandler}/>
+                <Button 
+                    title="Find Available Rooms" 
+                    color={Platform.OS === 'ios' ? "black" : ""} 
+                    onPress={findAvailRoomsHandler}
+                />
             </View>
             <View style={styles.button}>
-                <Button title="View Room List" color="black" onPress={viewRoomsHandler}/>
+                <Button title="View Room List" color={Platform.OS === 'ios' ? "black" : ""} onPress={viewRoomsHandler}/>
             </View>
             <View style={styles.filler}></View>
             <ShowRoomScreen visible={isAvailRoomScreen} onBackButton={closeAvailRoomScreen} dataAvail={availRoomData} thisServerIp={serverIP}/>
