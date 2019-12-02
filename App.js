@@ -42,7 +42,7 @@ export default function App() {
         var dayOfWeek = weekday[new Date().getDay()];
         //Fixes getMinutes so it always returns 2 digits
         var timeMin = new Date().getMinutes();
-        if (timeMin.length = 1) {
+        if (timeMin.length == 1) {
             timeMin = "0"+timeMin;
         }
         var curTime = "" + new Date().getHours() + timeMin;
