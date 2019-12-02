@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 import ViewRoomInfo from './ViewRoomInfo';
 
@@ -19,16 +19,17 @@ const RoomItem = props => {
     }
 
     //Get all schedule info for specific room
-    const getRoomInfo = () => {
-        return fetch("http://" + props.thisServerIp + "/rooms/?room=" + props.room)
-        .then((response) => response.json())
-        .then((responseJson) => {
+    const getRoomInfo = async () => { 
+        try {
+            console.log("http://" + props.thisServerIp + "/rooms/?room=" + props.room);
+            let response = await fetch("http://" + props.thisServerIp + "/rooms/?room=" + props.room);
+            let responseJson = await response.json();
             const result = Object.keys(responseJson).map(key => ({[key]: responseJson[key]}));
             setRoomInfoData(result);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        } catch (error) {
+            Alert.alert('Network Error', 'Could not connect to data server');
+            console.log(error);
+        }
     }
 
     //Checks if schedule info passed to this item

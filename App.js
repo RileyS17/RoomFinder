@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Alert } from 'react-native';
 
 import ShowRoomScreen from './components/ShowRoomScreen';
 import EnterServerScreen from './components/EnterServerScreen';
@@ -39,7 +39,6 @@ export default function App() {
     //Handler for set server IP
     const confirmIpHandler = enteredIp => {
         setServerIP(enteredIp);
-        console.log(serverIP);
     }
 
     //Get list of rooms currently available + current time period
@@ -56,7 +55,7 @@ export default function App() {
         var dayOfWeek = weekday[new Date().getDay()];
         //Fixes getMinutes so it always returns 2 digits
         var timeMin = new Date().getMinutes();
-        if (timeMin.length == 1) {
+        if (timeMin < 10) {
             timeMin = "0"+timeMin;
         }
         var curTime = "" + new Date().getHours() + timeMin;
@@ -77,12 +76,15 @@ export default function App() {
             }
             setAvailRoomData(formatResult);
         } catch (error) {
-            console.error(error);
+            Alert.alert('Network Error', 'Could not connect to data server');
+            console.log(error);
         }
     }
+    
     //Get list of all rooms with building groups
     const getViewRoomData = async () => {
         try {
+            console.log('http://' + serverIP + '/buildings/rooms');
             let response = await fetch('http://' + serverIP + '/buildings/rooms');
             let responseJson = await response.json();
             const result = Object.keys(responseJson).map(key => ({[key]: responseJson[key]}));
@@ -96,7 +98,8 @@ export default function App() {
             }
             setAllRoomsData(formatResult);
         } catch (error) {
-            console.error(error);
+            Alert.alert('Network Error', 'Could not connect to data server');
+            console.log(error);
         }
     }
 

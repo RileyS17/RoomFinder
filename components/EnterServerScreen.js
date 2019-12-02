@@ -9,12 +9,10 @@ const EnterServerScreen = props => {
         setIpInput(enteredValue);
     }
     const backButtonHandler = () => {
-        setIpInput("");
         props.onBackButton();
     }
     const confirmButtonHandler = () => {
         props.onConfirmIp(enteredIp);
-        setIpInput("");
         props.onBackButton();
     }
 
