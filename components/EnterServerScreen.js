@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
         padding: 5,
         alignItems: "center",
         borderRadius: 10,
-        backgroundColor: "#1eaae6",
+        backgroundColor: Platform.OS === 'ios' ? '#1eaae6' : "transparent",
     },
     confirmButton: {
         width: "30%",
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent: 'center',
         borderRadius: 10,
-        backgroundColor: "#1eaae6",
+        backgroundColor: Platform.OS === 'ios' ? '#1eaae6' : "transparent",
         margin: 30,
     },
     inputView: {

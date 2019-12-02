@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Modal, Button } from 'react-native';
+import { View, Text, StyleSheet, Modal, Button, Platform } from 'react-native';
 
 import Accordian from './Accordian';
 
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
         flex: 30,
         padding: 5,
         justifyContent: 'center',
-        backgroundColor: "#1eaae6",
+        backgroundColor: Platform.OS === 'ios' ? '#1eaae6' : "transparent",
         borderRadius: 10,
     },
     schedStyle: {

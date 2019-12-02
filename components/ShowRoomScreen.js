@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         padding: 5,
         alignItems: "center",
         borderRadius: 10,
-        backgroundColor: "#1eaae6",
+        backgroundColor: Platform.OS === 'ios' ? '#1eaae6' : "transparent",
     },
     listStyle: {
         marginTop: 60,

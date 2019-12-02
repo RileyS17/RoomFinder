@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         flex: 2,
         width: "90%",
         margin: 20,
-        backgroundColor: "#1eaae6",
+        backgroundColor: Platform.OS === 'ios' ? '#1eaae6' : "transparent",
         borderRadius: 50,
     },
     textView: {
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         alignSelf: 'flex-end',
         borderRadius: 10,
-        backgroundColor: "#1eaae6",
+        backgroundColor: Platform.OS === 'ios' ? '#1eaae6' : "transparent",
     },
     filler: {
         flex: 6,
