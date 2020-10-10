@@ -2,6 +2,8 @@
 
 README files for Server and Web Scraper are found within their respective folders.
 
+![](Demo.mp4)
+
 ## Running the mobile app
 
 ### Android
